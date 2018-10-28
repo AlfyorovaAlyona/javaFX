@@ -1,4 +1,4 @@
-package ru.javafx.start;
+package ru.javafx.main;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class Neighbors {
             int x1 = piece.x + dx;
             int y1 = piece.y + dy;
 
-            if (x1 >= 0 && x1 < Menu.X_TILES && y1 >= 0 && y1 < Menu.Y_TILES) {
+            if (x1 >= 0 && x1 < Menu.X_PIECES && y1 >= 0 && y1 < Menu.Y_PIECES) {
                 neighbors.add(Menu.pieces[x1][y1]);
             }
         }

@@ -1,7 +1,6 @@
-package ru.javafx.start;
+package ru.javafx.main;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,14 +12,12 @@ import javafx.stage.Stage;
 
 public class Menu extends Application {
 
-    public static final int PIECE_SIZE = 60;
-    private static final int WIDTH = 600;
+    private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
-    public static final int X_TILES = WIDTH / PIECE_SIZE;
-    public static final int Y_TILES = HEIGHT / PIECE_SIZE;
-    public static Piece[][] pieces = new Piece[X_TILES][Y_TILES];
-    public static boolean lost = false;
-    public static int flags = 0;
+    public static final int PIECE_SIZE = 40;
+    public static final int X_PIECES = WIDTH / PIECE_SIZE;
+    public static final int Y_PIECES = HEIGHT / PIECE_SIZE;
+    public static Piece[][] pieces = new Piece[X_PIECES][Y_PIECES];
     public Scene scene;
     private Neighbors neighbors = new Neighbors();
 
@@ -28,8 +25,8 @@ public class Menu extends Application {
         Pane pane = new Pane();
         pane.setPrefSize(WIDTH, HEIGHT);
 
-        for (int y = 0; y < Y_TILES; y++) {
-            for (int x = 0; x < X_TILES; x++) {
+        for (int y = 0; y < Y_PIECES; y++) {
+            for (int x = 0; x < X_PIECES; x++) {
                 Piece piece = new Piece(x, y, Math.random() < 0.1);
                 pieces[x][y] = piece;
 
@@ -37,8 +34,8 @@ public class Menu extends Application {
             }
         }
 
-        for (int y = 0; y < Y_TILES; y++) {
-            for (int x = 0; x < X_TILES; x++) {
+        for (int y = 0; y < Y_PIECES; y++) {
+            for (int x = 0; x < X_PIECES; x++) {
                 Piece piece = pieces[x][y];
 
                 long numBomb = neighbors.getNeighbors(piece).stream().filter(t -> t.isBomb).count();
@@ -73,7 +70,6 @@ public class Menu extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
         });
-
     }
 
     public static void main(String[] args) {
