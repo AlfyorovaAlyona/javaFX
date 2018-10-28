@@ -25,12 +25,12 @@ public class PieceHandler {
             public void handle(MouseEvent event) {
                 MouseButton mouseButton = event.getButton();
 
-                if (mouseButton == MouseButton.PRIMARY) {
+                if (mouseButton == MouseButton.PRIMARY) { //to open a button
                     open(piece);
                     if (lost) {
                         showBombs();
                     }
-                } else if (mouseButton == MouseButton.SECONDARY) {
+                } else if (mouseButton == MouseButton.SECONDARY) { //to put a flag on button supposing it's bomb
                     Image fl = new Image(flag);
                     piece.button.setGraphic(new ImageView(fl));
                     piece.button.setStyle("-fx-background-color: magenta;");
@@ -40,7 +40,7 @@ public class PieceHandler {
     }
 
     private void open(Piece piece) {
-        if (piece.isOpened) {
+        if (piece.isOpened) { //not allowed to click again
             return;
         }
 

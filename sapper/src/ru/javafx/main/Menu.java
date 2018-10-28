@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class Menu extends Application {
 
-    private static final int WIDTH = 800;
+    private static final int WIDTH = 800;       //убрать константы, а добавить в меню выбор сложности
     private static final int HEIGHT = 600;
     public static final int PIECE_SIZE = 40;
     public static final int X_PIECES = WIDTH / PIECE_SIZE;
@@ -23,7 +23,6 @@ public class Menu extends Application {
     private Parent createTable() {
         Pane pane = new Pane();
         pane.setPrefSize(WIDTH, HEIGHT);
-
 
         for (int y = 0; y < Y_PIECES; y++) {
             for (int x = 0; x < X_PIECES; x++) {
