@@ -17,7 +17,6 @@ public class Piece extends StackPane {
     public Text text = new Text();
     public Button button = new Button();
 
-
     public Piece(int x, int y, boolean isBomb) {
         this.x = x;
         this.y = y;

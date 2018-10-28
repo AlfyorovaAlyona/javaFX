@@ -1,6 +1,9 @@
 package ru.javafx.main;
 
 import java.util.ArrayList;
+import static ru.javafx.main.Menu.X_PIECES;
+import static ru.javafx.main.Menu.Y_PIECES;
+import static ru.javafx.main.Menu.pieces;
 
 public class Neighbors {
 
@@ -8,7 +11,8 @@ public class Neighbors {
 
         ArrayList<Piece> neighbors = new ArrayList<>();
 
-        int[] points = new int[] {
+        //neighbours coordinates
+        int[] coordinates = new int[] {
                 -1, -1,
                 -1,  0,
                 -1,  1,
@@ -19,15 +23,15 @@ public class Neighbors {
                  1,  1
         };
 
-        for (int i = 0; i < points.length; i++) {
-            int dx = points[i];
-            int dy = points[++i];
+        for (int i = 0; i < coordinates.length; i++) {
+            int dx = coordinates[i];
+            int dy = coordinates[++i];
 
             int x1 = piece.x + dx;
             int y1 = piece.y + dy;
 
-            if (x1 >= 0 && x1 < Menu.X_PIECES && y1 >= 0 && y1 < Menu.Y_PIECES) {
-                neighbors.add(Menu.pieces[x1][y1]);
+            if (x1 >= 0 && x1 < X_PIECES && y1 >= 0 && y1 < Y_PIECES) {
+                neighbors.add(pieces[x1][y1]);
             }
         }
 

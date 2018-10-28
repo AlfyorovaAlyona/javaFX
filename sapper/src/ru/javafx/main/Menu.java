@@ -9,7 +9,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-
 public class Menu extends Application {
 
     private static final int WIDTH = 800;
