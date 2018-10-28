@@ -32,19 +32,20 @@ public class Menu extends Application {
             }
         }
 
-        for (int y = 0; y < Y_PIECES; y++) {
-            for (int x = 0; x < X_PIECES; x++) {
-                Piece piece = pieces[x][y];
-                countBombs(piece);
-            }
-        }
+        countBombs();
+
         return pane;
     }
 
-    private void countBombs(Piece piece) {
-        long numBomb = neighbors.getNeighbors(piece).stream().filter(t -> t.isBomb).count();
-        if (numBomb > 0)
-            piece.text.setText(String.valueOf(numBomb));
+    private void countBombs() {
+        for (int y = 0; y < Y_PIECES; y++){
+            for(int x = 0;x < X_PIECES; x++){
+                Piece piece = pieces[x][y];
+                long numBomb = neighbors.getNeighbors(piece).stream().filter(t->t.isBomb).count();
+                        if (numBomb > 0)
+                        piece.text.setText(String.valueOf(numBomb));
+                }
+            }
     }
 
 
