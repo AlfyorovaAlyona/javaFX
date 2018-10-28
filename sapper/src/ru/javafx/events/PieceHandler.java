@@ -14,12 +14,12 @@ import static ru.javafx.main.Menu.X_PIECES;
 import static ru.javafx.main.Menu.Y_PIECES;
 import static ru.javafx.main.Menu.pieces;
 
-public class PieceHangler {
+public class PieceHandler {
     private boolean lost = false;
     private String bomba = getClass().getResource("mine.png").toExternalForm();
     private String flag = getClass().getResource("flag.png").toExternalForm();
 
-    public void pieceHangling(Piece piece) {
+    public void pieceHandling(Piece piece) {
         piece.button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -28,7 +28,7 @@ public class PieceHangler {
                 if (mouseButton == MouseButton.PRIMARY) {
                     open(piece);
                     if (lost) {
-                        lostGame();
+                        showBombs();
                     }
                 } else if (mouseButton == MouseButton.SECONDARY) {
                     Image fl = new Image(flag);
@@ -39,7 +39,7 @@ public class PieceHangler {
         });
     }
 
-    public void open(Piece piece) {
+    private void open(Piece piece) {
         if (piece.isOpened) {
             return;
         }
@@ -59,13 +59,13 @@ public class PieceHangler {
         if (piece.text.getText().isEmpty()) {
             Neighbors neighbors = new Neighbors();
             for (Piece piece1 : neighbors.getNeighbors(piece)) {
-                PieceHangler pH = new PieceHangler();
+                PieceHandler pH = new PieceHandler();
                 pH.open(piece1);
             }
         }
     }
 
-    private void lostGame() {
+    private void showBombs() {
         JOptionPane.showMessageDialog(null, "You are lost!");
         System.out.println("You are lost! Close the window and try again.");
         for (int y = 0; y < Y_PIECES; y++) {

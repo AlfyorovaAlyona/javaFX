@@ -17,18 +17,18 @@ public class Menu extends Application {
     public static final int X_PIECES = WIDTH / PIECE_SIZE;
     public static final int Y_PIECES = HEIGHT / PIECE_SIZE;
     public static Piece[][] pieces = new Piece[X_PIECES][Y_PIECES];
-    public Scene scene;
+    private Scene scene;
     private Neighbors neighbors = new Neighbors();
 
-    public Parent createTable() {
+    private Parent createTable() {
         Pane pane = new Pane();
         pane.setPrefSize(WIDTH, HEIGHT);
+
 
         for (int y = 0; y < Y_PIECES; y++) {
             for (int x = 0; x < X_PIECES; x++) {
                 Piece piece = new Piece(x, y, Math.random() < 0.1);
                 pieces[x][y] = piece;
-
                 pane.getChildren().add(piece);
             }
         }
@@ -36,14 +36,16 @@ public class Menu extends Application {
         for (int y = 0; y < Y_PIECES; y++) {
             for (int x = 0; x < X_PIECES; x++) {
                 Piece piece = pieces[x][y];
-
-                long numBomb = neighbors.getNeighbors(piece).stream().filter(t -> t.isBomb).count();
-
-                if (numBomb > 0)
-                    piece.text.setText(String.valueOf(numBomb));
+                countBombs(piece);
             }
         }
         return pane;
+    }
+
+    private void countBombs(Piece piece) {
+        long numBomb = neighbors.getNeighbors(piece).stream().filter(t -> t.isBomb).count();
+        if (numBomb > 0)
+            piece.text.setText(String.valueOf(numBomb));
     }
 
 

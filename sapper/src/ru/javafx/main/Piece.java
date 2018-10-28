@@ -1,6 +1,6 @@
 package ru.javafx.main;
 
-import ru.javafx.events.PieceHangler;
+import ru.javafx.events.PieceHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -31,8 +31,8 @@ public class Piece extends StackPane {
         button.setPrefWidth(Menu.PIECE_SIZE - 1);
         button.setPrefHeight(Menu.PIECE_SIZE - 1);
 
-        PieceHangler hangler = new PieceHangler();
-        hangler.pieceHangling(this);
+        PieceHandler hangler = new PieceHandler();
+        hangler.pieceHandling(this);
 
         getChildren().addAll(button, text);
     }
