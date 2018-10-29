@@ -1,9 +1,7 @@
 package ru.javafx.main;
 
 import java.util.ArrayList;
-import static ru.javafx.main.Menu.X_PIECES;
-import static ru.javafx.main.Menu.Y_PIECES;
-import static ru.javafx.main.Menu.pieces;
+import static ru.javafx.main.Menu.*;
 
 public class Neighbors {
 

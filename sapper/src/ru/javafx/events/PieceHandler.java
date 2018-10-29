@@ -10,9 +10,7 @@ import ru.javafx.main.Piece;
 
 import javax.swing.*;
 
-import static ru.javafx.main.Menu.X_PIECES;
-import static ru.javafx.main.Menu.Y_PIECES;
-import static ru.javafx.main.Menu.pieces;
+import static ru.javafx.main.Menu.*;
 
 public class PieceHandler {
     private boolean lost = false;
@@ -30,8 +28,9 @@ public class PieceHandler {
 
                 if (mouseButton == MouseButton.PRIMARY) { //to open a button
                     open(piece);
-                    if (lost)
-                        showBombs();
+
+                    winOrLost(); //check game result
+
                     if (event.getClickCount() == 2 && piece.isFlag) {// double click to throw the flag
                         viewFlag.setImage(null);
                         piece.isOpened = false;
@@ -58,6 +57,7 @@ public class PieceHandler {
             return;
         }
 
+        openedPieces++;
         piece.isOpened = true;
         piece.text.setVisible(true);
         piece.button.setStyle("-fx-background-color: pink;");
@@ -71,9 +71,28 @@ public class PieceHandler {
         }
     }
 
+    private void winOrLost() {
+        if (lost) {
+            JOptionPane.showMessageDialog(null, "You are lost!");
+            showBombs();
+            endGame();
+        } else if (openedPieces == (X_PIECES * Y_PIECES - bombs)) {
+            JOptionPane.showMessageDialog(null, "You are winner!");
+            showBombs();
+            endGame();
+        }
+    }
+
+    private void endGame() {
+        for (int y = 0; y < Y_PIECES; y++) {
+            for (int x = 0; x < X_PIECES; x++) {
+                Piece piece = pieces[x][y];
+                piece.button.setOnMouseClicked(null);
+            }
+        }
+    }
+
     private void showBombs() {
-        JOptionPane.showMessageDialog(null, "You are lost!");
-        System.out.println("You are lost! Close the window and try again.");
         for (int y = 0; y < Y_PIECES; y++) {
             for (int x = 0; x < X_PIECES; x++) {
                 Piece piece2 = pieces[x][y];
@@ -82,4 +101,5 @@ public class PieceHandler {
             }
         }
     }
+
 }

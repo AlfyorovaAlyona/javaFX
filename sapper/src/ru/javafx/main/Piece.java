@@ -7,6 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import static ru.javafx.main.Menu.*;
+
 public class Piece extends StackPane {
 
     public int x;
@@ -26,11 +28,11 @@ public class Piece extends StackPane {
         text.setFont(Font.font(20));
         text.setStroke(Color.MAGENTA);
         text.setVisible(false);
-        setTranslateX(x * Menu.PIECE_SIZE);
-        setTranslateY(y * Menu.PIECE_SIZE);
+        setTranslateX(x * PIECE_SIZE);
+        setTranslateY(y * PIECE_SIZE);
 
-        button.setPrefWidth(Menu.PIECE_SIZE - 1);
-        button.setPrefHeight(Menu.PIECE_SIZE - 1);
+        button.setPrefWidth(PIECE_SIZE - 1);
+        button.setPrefHeight(PIECE_SIZE - 1);
 
         PieceHandler handler = new PieceHandler();
         handler.pieceHandling(this);

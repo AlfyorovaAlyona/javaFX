@@ -12,22 +12,28 @@ import javafx.stage.Stage;
 
 public class Menu extends Application {
 
-    private static final int WIDTH = 600;       //убрать константы, а добавить в меню выбор сложности
-    private static final int HEIGHT = 600;
+    private static final int WIDTH = 500;       //убрать константы, а добавить в меню выбор сложности
+    private static final int HEIGHT = 500;
     public static final int PIECE_SIZE = 50;
     public static final int X_PIECES = WIDTH / PIECE_SIZE;
     public static final int Y_PIECES = HEIGHT / PIECE_SIZE;
     public static Piece[][] pieces = new Piece[X_PIECES][Y_PIECES];
+    public static long bombs;
+    public static long openedPieces;
     private Scene scene;
     private Neighbors neighbors = new Neighbors();
 
     private Parent createTable() {
         Pane pane = new Pane();
         pane.setPrefSize(WIDTH, HEIGHT);
+        bombs = 0;
+        openedPieces = 0;
 
         for (int y = 0; y < Y_PIECES; y++) {
             for (int x = 0; x < X_PIECES; x++) {
                 Piece piece = new Piece(x, y, Math.random() < 0.1);
+                if (piece.isBomb)
+                    bombs++;
                 pieces[x][y] = piece;
                 pane.getChildren().add(piece);
             }
