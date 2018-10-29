@@ -13,6 +13,7 @@ public class Piece extends StackPane {
     public int y;
     public boolean isBomb;
     public boolean isOpened = false;
+    public boolean isFlag = false;
 
     public Text text = new Text();
     public Button button = new Button();
@@ -31,8 +32,8 @@ public class Piece extends StackPane {
         button.setPrefWidth(Menu.PIECE_SIZE - 1);
         button.setPrefHeight(Menu.PIECE_SIZE - 1);
 
-        PieceHandler hangler = new PieceHandler();
-        hangler.pieceHandling(this);
+        PieceHandler handler = new PieceHandler();
+        handler.pieceHandling(this);
 
         getChildren().addAll(button, text);
     }

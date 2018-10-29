@@ -19,6 +19,9 @@ public class PieceHandler {
     private String bomba = getClass().getResource("mine.png").toExternalForm();
     private String flag = getClass().getResource("flag.png").toExternalForm();
 
+    private Image imageFlag = new Image(flag);
+    private ImageView viewFlag = new ImageView(imageFlag);
+
     public void pieceHandling(Piece piece) {
         piece.button.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -27,13 +30,16 @@ public class PieceHandler {
 
                 if (mouseButton == MouseButton.PRIMARY) { //to open a button
                     open(piece);
-                    if (lost) {
+                    if (lost)
                         showBombs();
+                    if (event.getClickCount() == 2 && piece.isFlag) {// double click to throw the flag
+                        viewFlag.setImage(null);
+                        piece.isOpened = false;
                     }
                 } else if (mouseButton == MouseButton.SECONDARY) { //to put a flag on button supposing it's bomb
-                    Image fl = new Image(flag);
-                    piece.button.setGraphic(new ImageView(fl));
-                    piece.button.setStyle("-fx-background-color: magenta;");
+                    piece.button.setGraphic(viewFlag);
+                    piece.isOpened = true;
+                    piece.isFlag = true;
                 }
             }
         });
@@ -47,7 +53,7 @@ public class PieceHandler {
         if (piece.isBomb) {
             Image bomb = new Image(bomba);
             piece.button.setGraphic(new ImageView(bomb));
-            piece.button.setStyle("-fx-background-color: magenta;");
+            piece.button.setStyle("-fx-background-color: pink;");
             lost = true;
             return;
         }

@@ -4,16 +4,17 @@ import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class Menu extends Application {
 
-    private static final int WIDTH = 800;       //убрать константы, а добавить в меню выбор сложности
+    private static final int WIDTH = 600;       //убрать константы, а добавить в меню выбор сложности
     private static final int HEIGHT = 600;
-    public static final int PIECE_SIZE = 40;
+    public static final int PIECE_SIZE = 50;
     public static final int X_PIECES = WIDTH / PIECE_SIZE;
     public static final int Y_PIECES = HEIGHT / PIECE_SIZE;
     public static Piece[][] pieces = new Piece[X_PIECES][Y_PIECES];
@@ -47,22 +48,37 @@ public class Menu extends Application {
             piece.text.setText(String.valueOf(numBomb));
     }
 
+    private void setPinkBackground(BorderPane root) {
+        String fon = getClass().getResource("fon2.png").toExternalForm();
+        Image image = new Image(fon);
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO,
+                false, false, true, false);
+
+        Background background = new Background(new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                bSize));
+        root.setBackground(background);
+    }
 
     @Override
     public void start(Stage primaryStage) {
         BorderPane root = new BorderPane();
-        Text labelTitle = new Text("Welcome to PinkSapper! " +
-                                   " Start a new game?");
+        Text labelTitle = new Text(" Welcome to PinkSapper! " +
+                                   "Start a new game?");
+        labelTitle.setFont(Font.font(15));
         Button startGame = new Button("Start");
         startGame.setPrefHeight(50);
         startGame.setPrefWidth(100);
         root.setTop(labelTitle);
         root.setCenter(startGame);
+        setPinkBackground(root);
 
-        Scene scene1 = new Scene(root, 350, 150);
+        Scene sceneMenu = new Scene(root, 350, 150);
 
         primaryStage.setTitle("PinkSapper");
-        primaryStage.setScene(scene1);
+        primaryStage.setScene(sceneMenu);
         primaryStage.show();
 
         startGame.setOnAction(click -> {
