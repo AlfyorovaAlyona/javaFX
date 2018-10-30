@@ -27,19 +27,24 @@ public class PieceHandler {
                 MouseButton mouseButton = event.getButton();
 
                 if (mouseButton == MouseButton.PRIMARY) { //to open a button
-                    open(piece);
+                    if (event.getClickCount() == 1) {
+                        open(piece);
+                    }
 
-                    winOrLost(); //check game result
-
-                    if (event.getClickCount() == 2 && piece.isFlag) {// double click to throw the flag
-                        viewFlag.setImage(null);
+                    if (event.getClickCount() == 2) {// double click to throw the flag
                         piece.isOpened = false;
+                        piece.isFlag = false;
+                        piece.button.setGraphic(null);
+                        isFlagged--;
                     }
                 } else if (mouseButton == MouseButton.SECONDARY) { //to put a flag on button supposing it's bomb
                     piece.button.setGraphic(viewFlag);
                     piece.isOpened = true;
                     piece.isFlag = true;
+                    isFlagged++;
                 }
+
+                winOrLost(); //check game result
             }
         });
     }
@@ -76,7 +81,7 @@ public class PieceHandler {
             JOptionPane.showMessageDialog(null, "You are lost!");
             showBombs();
             endGame();
-        } else if (openedPieces == (X_PIECES * Y_PIECES - bombs)) {
+        } else if (openedPieces == (X_PIECES * Y_PIECES - bombs) && bombs == isFlagged) {
             JOptionPane.showMessageDialog(null, "You are winner!");
             showBombs();
             endGame();

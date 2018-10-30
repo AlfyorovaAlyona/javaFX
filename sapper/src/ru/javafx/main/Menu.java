@@ -20,6 +20,7 @@ public class Menu extends Application {
     public static Piece[][] pieces = new Piece[X_PIECES][Y_PIECES];
     public static long bombs;
     public static long openedPieces;
+    public static int isFlagged;
     private Scene scene;
     private Neighbors neighbors = new Neighbors();
 
@@ -28,6 +29,7 @@ public class Menu extends Application {
         pane.setPrefSize(WIDTH, HEIGHT);
         bombs = 0;
         openedPieces = 0;
+        isFlagged = 0;
 
         for (int y = 0; y < Y_PIECES; y++) {
             for (int x = 0; x < X_PIECES; x++) {
@@ -42,30 +44,16 @@ public class Menu extends Application {
         for (int y = 0; y < Y_PIECES; y++) {
             for (int x = 0; x < X_PIECES; x++) {
                 Piece piece = pieces[x][y];
-                countBombs(piece);
+                countBombsNear(piece);
             }
         }
         return pane;
     }
 
-    private void countBombs(Piece piece) {
+    private void countBombsNear(Piece piece) {
         long numBomb = neighbors.getNeighbors(piece).stream().filter(t -> t.isBomb).count();
         if (numBomb > 0)
             piece.text.setText(String.valueOf(numBomb));
-    }
-
-    private void setPinkBackground(BorderPane root) {
-        String fon = getClass().getResource("fon2.png").toExternalForm();
-        Image image = new Image(fon);
-        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO,
-                false, false, true, false);
-
-        Background background = new Background(new BackgroundImage(image,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.CENTER,
-                bSize));
-        root.setBackground(background);
     }
 
     @Override
@@ -92,6 +80,20 @@ public class Menu extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
         });
+    }
+
+    private void setPinkBackground(BorderPane root) {
+        String fon = getClass().getResource("fon2.png").toExternalForm();
+        Image image = new Image(fon);
+        BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO,
+                false, false, true, false);
+
+        Background background = new Background(new BackgroundImage(image,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                bSize));
+        root.setBackground(background);
     }
 
     public static void main(String[] args) {
