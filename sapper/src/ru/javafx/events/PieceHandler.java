@@ -30,14 +30,13 @@ public class PieceHandler {
                     if (event.getClickCount() == 1) {
                         open(piece);
                     }
-
-                    if (event.getClickCount() == 2) {// double click to throw the flag
+                    if (event.getClickCount() == 2 && piece.isFlag) {// double click to throw the flag
                         piece.isOpened = false;
                         piece.isFlag = false;
                         piece.button.setGraphic(null);
                         isFlagged--;
                     }
-                } else if (mouseButton == MouseButton.SECONDARY) { //to put a flag on button supposing it's bomb
+                } else if (mouseButton == MouseButton.SECONDARY && !piece.isOpened) { //to put a flag on button supposing it's bomb
                     piece.button.setGraphic(viewFlag);
                     piece.isOpened = true;
                     piece.isFlag = true;
