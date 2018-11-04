@@ -43,7 +43,7 @@ public class PieceHandler {
                     isFlagged++;
                 }
 
-                winOrLost(); //check game result
+                winOrLost(); //check game's results
             }
         });
     }

@@ -1,14 +1,19 @@
 package ru.javafx.main;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 public class Menu extends Application {
 
@@ -23,13 +28,20 @@ public class Menu extends Application {
     public static int isFlagged;
     private Scene scene;
     private Neighbors neighbors = new Neighbors();
+    private Button restartButton = new Button("Restart");
+    private Button exitButton = new Button("Exit");
 
     private Parent createTable() {
         Pane pane = new Pane();
-        pane.setPrefSize(WIDTH, HEIGHT);
+        pane.setPrefSize(WIDTH, HEIGHT + 50);
         bombs = 0;
         openedPieces = 0;
         isFlagged = 0;
+
+        restartButton.setLayoutX(10);
+        restartButton.setLayoutY(HEIGHT + 15);
+        exitButton.setLayoutX(WIDTH - 50);
+        exitButton.setLayoutY(HEIGHT + 15);
 
         for (int y = 0; y < Y_PIECES; y++) {
             for (int x = 0; x < X_PIECES; x++) {
@@ -40,6 +52,9 @@ public class Menu extends Application {
                 pane.getChildren().add(piece);
             }
         }
+
+        pane.getChildren().add(restartButton);
+        pane.getChildren().add(exitButton);
 
         for (int y = 0; y < Y_PIECES; y++) {
             for (int x = 0; x < X_PIECES; x++) {
@@ -54,6 +69,8 @@ public class Menu extends Application {
         long numBomb = neighbors.getNeighbors(piece).stream().filter(t -> t.isBomb).count();
         if (numBomb > 0)
             piece.text.setText(String.valueOf(numBomb));
+
+        //Rectangle numBombs = new Rectangle();
     }
 
     @Override
@@ -76,9 +93,15 @@ public class Menu extends Application {
         primaryStage.show();
 
         startGame.setOnAction(click -> {
-            scene = new Scene(createTable());
-            primaryStage.setScene(scene);
-            primaryStage.show();
+            startGame(primaryStage);
+            restartButton.setOnAction(cl -> {
+                startGame(primaryStage);
+            });
+
+            exitButton.setOnAction(ex -> {
+                Platform.exit();
+                System.exit(0);
+            });
         });
     }
 
@@ -94,6 +117,12 @@ public class Menu extends Application {
                 BackgroundPosition.CENTER,
                 bSize));
         root.setBackground(background);
+    }
+
+    private void startGame(Stage primaryStage) {
+        scene = new Scene(createTable());
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
 
     public static void main(String[] args) {
